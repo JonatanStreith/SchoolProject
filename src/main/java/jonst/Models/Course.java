@@ -22,12 +22,14 @@ public class Course {
         students = new ArrayList();
     }
 
-    public void register(Student student){
+    public boolean register(Student student){
         students.add(student);
+        return true;
     }
 
-    public void unregister(Student student){
+    public boolean unregister(Student student){
         students.remove(student);
+        return true;
     }
 
 
@@ -40,24 +42,27 @@ public class Course {
         return courseName;
     }
 
-    public void setCourseName(String courseName) {
+    public boolean setCourseName(String courseName) {
         this.courseName = courseName;
+        return true;
     }
 
     public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public boolean setStartDate(LocalDate startDate) {
         this.startDate = startDate;
+        return true;
     }
 
     public int getWeekDuration() {
         return weekDuration;
     }
 
-    public void setWeekDuration(int weekDuration) {
+    public boolean setWeekDuration(int weekDuration) {
         this.weekDuration = weekDuration;
+        return true;
     }
 
     public List<Student> getStudents() {

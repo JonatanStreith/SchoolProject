@@ -34,12 +34,12 @@ public class App {
 
         while (loop) {
 
-            System.out.println("What would you like to do?\n");
+            System.out.println("\nWhat would you like to do?\n");
             System.out.println("1: Create entities.");
             System.out.println("2: Registering.");
             System.out.println("3: Find information.");
             System.out.println("4: Edit records.");
-            System.out.println("X: Exit program.");
+            System.out.println("\nX: Exit program.\n");
 
             String input = inputReader.nextLine().toUpperCase();
 
@@ -56,12 +56,12 @@ public class App {
                 case "4":
                     editMenu();
                     break;
-                case "x":
+                case "X":
                     System.out.println("Thank you for your patronage. Please come again!");
                     loop = false;
                     break;
                 default:
-                    System.out.println("That's not an option.");
+                    System.out.println("That's not an option.\n");
                     break;
             }
         }
@@ -75,10 +75,10 @@ public class App {
 
         while (loop) {
 
-            System.out.println("What would you like to create into the system?\n");
+            System.out.println("\nWhat would you like to do?\n");
             System.out.println("1: Create new student.");
             System.out.println("2: Create new course.");
-            System.out.println("X: Return to previous menu.");
+            System.out.println("\nX: Return to previous menu.\n");
 
             String input = inputReader.nextLine().toUpperCase();
 
@@ -100,7 +100,7 @@ public class App {
                     loop = false;
                     break;
                 default:
-                    System.out.println("That's not an option.");
+                    System.out.println("That's not an option.\n");
                     break;
 
             }
@@ -118,10 +118,10 @@ public class App {
 
         while (loop) {
 
-            System.out.println("What would you like to do?\n");
+            System.out.println("\nWhat would you like to do?\n");
             System.out.println("1: Register a student to a course.");
             System.out.println("2: Unregister a student from a course.");
-            System.out.println("X: Return to previous menu.");
+            System.out.println("\nX: Return to previous menu.\n");
 
             String input = inputReader.nextLine().toUpperCase();
 
@@ -143,7 +143,7 @@ public class App {
                     loop = false;
                     break;
                 default:
-                    System.out.println("That's not an option.");
+                    System.out.println("That's not an option.\n");
                     break;
 
             }
@@ -161,7 +161,7 @@ public class App {
 
         while (loop) {
 
-            System.out.println("What would you like to do?\n");
+            System.out.println("\nWhat would you like to do?\n");
             System.out.println("1: Find a student through their e-mail.");
             System.out.println("2: Find a student through their Id.");
             System.out.println("3: Find all students by a given name. (Will return a list.)");
@@ -171,7 +171,7 @@ public class App {
             System.out.println("6: Find all courses by a given name. (Will return a list.)");
             System.out.println("7: List all courses. (Will return a list. WARNING: May be long.)");
 
-            System.out.println("X: Return to previous menu.");
+            System.out.println("\nX: Return to previous menu.\n");
 
             String input = inputReader.nextLine().toUpperCase();
 
@@ -203,7 +203,7 @@ public class App {
                     loop = false;
                     break;
                 default:
-                    System.out.println("That's not an option.");
+                    System.out.println("That's not an option.\n");
                     break;
             }
         }
@@ -217,7 +217,7 @@ public class App {
 
         while (loop) {
 
-            System.out.println("What would you like to do?\n");
+            System.out.println("\nWhat would you like to do?\n");
             System.out.println("(Ids cannot be changed for security reasons.)\n");
 
             System.out.println("1: Change student name.");
@@ -229,7 +229,7 @@ public class App {
             System.out.println("6: Change course starting date.");
 
 
-            System.out.println("X: Return to previous menu.");
+            System.out.println("\nX: Return to previous menu.\n");
 
             String input = inputReader.nextLine().toUpperCase();
 
@@ -258,7 +258,7 @@ public class App {
                     loop = false;
                     break;
                 default:
-                    System.out.println("That's not an option.");
+                    System.out.println("That's not an option.\n");
                     break;
             }
         }
@@ -277,10 +277,18 @@ public class App {
 
         while (true) {
             String reply = getReply("Student? ");
+            String[] replyArray;
+            String method = "";
+            String input = "";
+            try {
+                replyArray = reply.split(": ");
+                method = replyArray[0];
+                input = replyArray[1];
+            } catch (Exception e) {
+                System.out.println("I'm sorry, that's not correct syntax.");
+                continue;
+            }
 
-            String[] replyArray = reply.split(": ");
-            String method = replyArray[0];
-            String input = replyArray[1];
 
             switch (method) {
                 case "Id":
@@ -309,9 +317,18 @@ public class App {
         while (true) {
             String reply = getReply("Course? ");
 
-            String[] replyArray = reply.split(": ");
-            String method = replyArray[0];
-            String input = replyArray[1];
+            String[] replyArray;
+            String method = "";
+            String input = "";
+
+            try {
+                replyArray = reply.split(": ");
+                method = replyArray[0];
+                input = replyArray[1];
+            } catch (Exception e) {
+                System.out.println("I'm sorry, that's not correct syntax.");
+                continue;
+            }
 
             switch (method) {
                 case "Id":
@@ -359,12 +376,12 @@ public class App {
             name = getReply("Course name? ");
             date = LocalDate.parse(getReply("Starting date? (YYYY-MM-DD) "));
             weeks = Integer.parseInt(getReply("Number of weeks? "));
-        } catch(Exception e) {
+        } catch (Exception e) {
             legitDate = false;
             System.out.println("Starting date not accepted. Please follow specified standard.");
         }
 
-        if(legitDate) {
+        if (legitDate) {
             Course newCourse = new Course(name, date, weeks);
 
             courseAccess.saveCourse(newCourse);
@@ -510,11 +527,11 @@ public class App {
         System.out.println("You have chosen to change a student's name.\n");
         Student student = retrieveStudent();
 
-        if(student==null){
+        if (student == null) {
             System.out.println("I'm sorry, the student you have specified does not exist.");
-        } else{
+        } else {
             String currentName = student.getName();
-            System.out.println("The student's current name is "+ currentName + ".");
+            System.out.println("The student's current name is " + currentName + ".");
             String newName = getReply("Please input a new name. ");
 
             student.setName(newName);
@@ -526,11 +543,11 @@ public class App {
         System.out.println("You have chosen to change a student's e-mail address.\n");
         Student student = retrieveStudent();
 
-        if(student==null){
+        if (student == null) {
             System.out.println("I'm sorry, the student you have specified does not exist.");
-        } else{
+        } else {
             String currentEmail = student.getEmail();
-            System.out.println("The student's current e-mail address is "+ currentEmail + ".");
+            System.out.println("The student's current e-mail address is " + currentEmail + ".");
             String newEmail = getReply("Please input a new e-mail address. ");
 
             student.setEmail(newEmail);
@@ -543,11 +560,11 @@ public class App {
 
         Student student = retrieveStudent();
 
-        if(student==null){
+        if (student == null) {
             System.out.println("I'm sorry, the student you have specified does not exist.");
-        } else{
+        } else {
             String currentAddress = student.getAddress();
-            System.out.println("The student's current address is "+ currentAddress + ".");
+            System.out.println("The student's current address is " + currentAddress + ".");
             String newAddress = getReply("Please input a new address. ");
 
             student.setAddress(newAddress);
@@ -559,11 +576,11 @@ public class App {
         System.out.println("You have chosen to change a course's name.\n");
         Course course = retrieveCourse();
 
-        if(course==null){
+        if (course == null) {
             System.out.println("I'm sorry, the course you have specified does not exist.");
-        } else{
+        } else {
             String currentName = course.getCourseName();
-            System.out.println("The course's current name is "+ currentName + ".");
+            System.out.println("The course's current name is " + currentName + ".");
             String newName = getReply("Please input a new name. ");
 
             course.setCourseName(newName);
@@ -578,20 +595,20 @@ public class App {
         int newLength = 0;
         boolean legitValue = true;
 
-        if(course==null){
+        if (course == null) {
             System.out.println("I'm sorry, the course you have specified does not exist.");
-        } else{
+        } else {
             int currentLength = course.getWeekDuration();
-            System.out.println("The course's current duration is "+ currentLength + " weeks.");
+            System.out.println("The course's current duration is " + currentLength + " weeks.");
 
             try {
                 newLength = Integer.parseInt(getReply("Please input a new duration in weeks. (Numbers only.) "));
-            } catch(Exception e) {
+            } catch (Exception e) {
                 legitValue = false;
                 System.out.println("I'm sorry, course duration needs to be a number.");
             }
 
-            if(legitValue) {
+            if (legitValue) {
                 course.setWeekDuration(newLength);
                 System.out.println("New duration set.");
             }
@@ -605,20 +622,20 @@ public class App {
         LocalDate newDate = null;
         boolean legitValue = true;
 
-        if(course==null){
+        if (course == null) {
             System.out.println("I'm sorry, the course you have specified does not exist.");
-        } else{
+        } else {
             LocalDate currentDate = course.getStartDate();
-            System.out.println("The course's current starting date is "+ currentDate + ".");
+            System.out.println("The course's current starting date is " + currentDate + ".");
 
             try {
                 newDate = LocalDate.parse(getReply("Please input a new starting date. (YYYY-MM-DD) "));
-            } catch(Exception e) {
+            } catch (Exception e) {
                 legitValue = false;
                 System.out.println("New starting date not accepted. Please follow specified standard.");
             }
 
-            if(legitValue) {
+            if (legitValue) {
                 course.setStartDate(newDate);
                 System.out.println("New starting date set.");
             }
