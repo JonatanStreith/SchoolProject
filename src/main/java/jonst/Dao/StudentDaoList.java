@@ -8,8 +8,10 @@ import java.util.List;
 
 public class StudentDaoList implements StudentDao {
 
-    private static List<Student> students;
+    private static List<Student> students = new ArrayList<>();
 
+    public StudentDaoList() {
+    }
 
     @Override
     public Student saveStudent(Student student) {
@@ -66,5 +68,9 @@ public class StudentDaoList implements StudentDao {
             return true;
         }
         return false;
+    }
+
+    public int getNumberOfStudents(){
+        return students.size();
     }
 }

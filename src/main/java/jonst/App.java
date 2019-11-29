@@ -40,7 +40,7 @@ public class App {
             System.out.println("4: Edit records.");
             System.out.println("X: Exit program.");
 
-            String input = inputReader.nextLine();
+            String input = inputReader.nextLine().toUpperCase();
 
             switch (input) {
                 case "1":
@@ -55,7 +55,7 @@ public class App {
                 case "4":
                     editMenu();
                     break;
-                case "X":
+                case "x":
                     System.out.println("Thank you for your patronage. Please come again!");
                     loop = false;
                     break;
@@ -81,7 +81,7 @@ public class App {
             System.out.println("2: Create new course.");
             System.out.println("X: Return to previous menu.");
 
-            String input = inputReader.nextLine();
+            String input = inputReader.nextLine().toUpperCase();
 
             switch (input) {
                 case "1":
@@ -124,7 +124,7 @@ public class App {
             System.out.println("2: Unregister a student from a course.");
             System.out.println("X: Return to previous menu.");
 
-            String input = inputReader.nextLine();
+            String input = inputReader.nextLine().toUpperCase();
 
             switch (input) {
                 case "1":
@@ -175,7 +175,7 @@ public class App {
 
             System.out.println("X: Return to previous menu.");
 
-            String input = inputReader.nextLine();
+            String input = inputReader.nextLine().toUpperCase();
 
             switch (input) {
                 case "1":
@@ -211,8 +211,6 @@ public class App {
         }
     }
 
-
-
     private static void editMenu() {
 
         //This is the edit menu. You can edit the information in students and courses here.
@@ -235,7 +233,7 @@ public class App {
 
             System.out.println("X: Return to previous menu.");
 
-            String input = inputReader.nextLine();
+            String input = inputReader.nextLine().toUpperCase();
 
             switch (input) {
                 case "1":

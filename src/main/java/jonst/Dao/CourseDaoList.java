@@ -10,7 +10,10 @@ import java.util.List;
 
 public class CourseDaoList implements CourseDao {
 
-    private static List<Course> courses;
+    private static List<Course> courses = new ArrayList<>();
+
+    public CourseDaoList() {
+    }
 
     @Override
     public Course saveCourse(Course course) {
@@ -64,5 +67,9 @@ public class CourseDaoList implements CourseDao {
             return true;
         }
         return false;
+    }
+
+    public int getNumberOfCourses(){
+        return courses.size();
     }
 }
