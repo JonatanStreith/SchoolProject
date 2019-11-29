@@ -7,6 +7,7 @@ import jonst.Models.Student;
 
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -65,8 +66,6 @@ public class App {
             }
         }
     }
-
-
 
 
     private static void createMenu() {
@@ -152,7 +151,6 @@ public class App {
 
         }
     }
-
 
 
     private static void infomenu() {
@@ -266,11 +264,72 @@ public class App {
         }
     }
 
+    //----------- Helping methods --------------------------
 
-    public static String getReply(String line){
+    public static String getReply(String line) {
         System.out.println(line);
         String reply = inputReader.nextLine();
         return reply;
+    }
+
+    private static Student retrieveStudent() {
+        System.out.println("Please specify student, and prefix by method of finding them. (Example: Id: 1; Name: Bob Dylan; E-mail: bob@bob.com.");
+
+        while (true) {
+            String reply = getReply("Student? ");
+
+            String[] replyArray = reply.split(": ");
+            String method = replyArray[0];
+            String input = replyArray[1];
+
+            switch (method) {
+                case "Id":
+                    return studentAccess.findById(Integer.parseInt(input));
+
+                case "Name":
+                    List<Student> resultList = studentAccess.findByName(input);
+                    if (resultList.size() > 0)
+                        return resultList.get(0);                       //It will automatically return the first student found. Don't like it?
+                    else                                                //Has multiple students by the same name and want to get someone else?
+                        return null;                                    //Tough! Use Id like a grownup.
+
+                case "E-mail":
+                    return studentAccess.findByEmail(input);
+
+                default:
+                    System.out.println("I'm sorry, that's not an acceptable method of retrieval.");
+                    break;
+            }
+        }
+    }
+
+    private static Course retrieveCourse() {
+        System.out.println("Please specify course, and prefix by method of finding it. (Example: Id: 1; Name: Math 101.");
+
+        while (true) {
+            String reply = getReply("Course? ");
+
+            String[] replyArray = reply.split(": ");
+            String method = replyArray[0];
+            String input = replyArray[1];
+
+            switch (method) {
+                case "Id":
+                    return courseAccess.findById(Integer.parseInt(input));
+
+                case "Name":
+                    List<Course> resultList = courseAccess.findByName(input);
+                    if (resultList.size() > 0)
+                        return resultList.get(0);                       //It will automatically return the first course found. Don't like it?
+                    else                                                //Has multiple courses by the same name and want to get someone else?
+                        return null;                                    //Tough! Use Id like a grownup.
+
+
+                default:
+                    System.out.println("I'm sorry, that's not an acceptable method of retrieval.");
+                    break;
+            }
+        }
     }
 
 
@@ -285,9 +344,10 @@ public class App {
 
         studentAccess.saveStudent(newStudent);
 
-        System.out.println("Student by the name of \""+name+"\" has been created in the system under Id "+ newStudent.getId() + ".");
+        System.out.println("Student by the name of \"" + name + "\" has been created in the system under Id " + newStudent.getId() + ".");
 
     }
+
     private static void newCourse() {
 
         String name = getReply("Course name? ");
@@ -298,44 +358,85 @@ public class App {
 
         courseAccess.saveCourse(newCourse);
 
-        System.out.println("Course by the name of \""+name+"\" has been created in the system under Id "+ newCourse.getId() + ".");
+        System.out.println("Course by the name of \"" + name + "\" has been created in the system under Id " + newCourse.getId() + ".");
 
     }
+
     //--------------------------------------------------
     private static void registerStudent() {
+        System.out.println("You have chosen to register a student.\n");
+
+        Student student = retrieveStudent();
+        Course course = retrieveCourse();
+
+        if(student == null || course == null){
+            System.out.println("Sorry, the student and/or course you have specified does not exist.");
+        } else {
+            course.register(student);
+            System.out.println("Registration complete.");
+        }
+
     }
+
+
     private static void unregisterStudent() {
+
+        System.out.println("You have chosen to unregister a student.\n");
+
+        Student student = retrieveStudent();
+        Course course = retrieveCourse();
+
+        if(student == null || course == null){
+            System.out.println("Sorry, the student and/or course you have specified does not exist.");
+        } else {
+            course.unregister(student);
+            System.out.println("Unregistration complete.");
+        }
     }
+
+
+
+
     //--------------------------------------------------
     private static void findStudentByEmail() {
     }
+
     private static void findStudentById() {
     }
+
     private static void findStudentsByName() {
     }
+
     private static void findAllStudents() {
     }
+
     private static void findCourseById() {
     }
+
     private static void findCoursesByName() {
     }
+
     private static void findAllCourses() {
     }
-//--------------------------------------------------
+
+    //--------------------------------------------------
     private static void changeStudentName() {
     }
+
     private static void changeStudentEmail() {
     }
+
     private static void changeStudentaddress() {
     }
+
     private static void changeCourseName() {
     }
+
     private static void changeCourseLength() {
     }
+
     private static void changeCourseDate() {
     }
-
-
 
 
 }
