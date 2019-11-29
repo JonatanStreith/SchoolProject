@@ -48,4 +48,9 @@ public class Student {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public String studentInfo(){
+
+        return ("(" + getId() + ") " + getName() + "; e-mail: " + getEmail() + ", address: " + getAddress() + ".");
+    }
 }

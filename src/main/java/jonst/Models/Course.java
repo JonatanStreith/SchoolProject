@@ -63,4 +63,9 @@ public class Course {
     public List<Student> getStudents() {
         return students;
     }
+
+    public String courseInfo(){
+        return ("(" + getId() + ") " + getCourseName() + "; starts " + getStartDate() + ", duration: " + getWeekDuration() + " weeks.");
+
+    }
 }

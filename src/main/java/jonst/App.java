@@ -267,7 +267,7 @@ public class App {
     //----------- Helping methods --------------------------
 
     public static String getReply(String line) {
-        System.out.println(line);
+        System.out.print(line);
         String reply = inputReader.nextLine();
         return reply;
     }
@@ -350,16 +350,27 @@ public class App {
 
     private static void newCourse() {
 
-        String name = getReply("Course name? ");
-        LocalDate date = LocalDate.parse(getReply("Starting date? (YYYY-MM-DD) "));
-        int weeks = Integer.parseInt(getReply("Number of weeks? "));
+        boolean legitDate = true;
+        String name = "";
+        LocalDate date = null;
+        int weeks = 0;
 
-        Course newCourse = new Course(name, date, weeks);
+        try {
+            name = getReply("Course name? ");
+            date = LocalDate.parse(getReply("Starting date? (YYYY-MM-DD) "));
+            weeks = Integer.parseInt(getReply("Number of weeks? "));
+        } catch(Exception e) {
+            legitDate = false;
+            System.out.println("Starting date not accepted. Please follow specified standard.");
+        }
 
-        courseAccess.saveCourse(newCourse);
+        if(legitDate) {
+            Course newCourse = new Course(name, date, weeks);
 
-        System.out.println("Course by the name of \"" + name + "\" has been created in the system under Id " + newCourse.getId() + ".");
+            courseAccess.saveCourse(newCourse);
 
+            System.out.println("Course by the name of \"" + name + "\" has been created in the system under Id " + newCourse.getId() + ".");
+        }
     }
 
     //--------------------------------------------------
@@ -369,8 +380,8 @@ public class App {
         Student student = retrieveStudent();
         Course course = retrieveCourse();
 
-        if(student == null || course == null){
-            System.out.println("Sorry, the student and/or course you have specified does not exist.");
+        if (student == null || course == null) {
+            System.out.println("I'm sorry, the student and/or course you have specified does not exist.");
         } else {
             course.register(student);
             System.out.println("Registration complete.");
@@ -386,8 +397,8 @@ public class App {
         Student student = retrieveStudent();
         Course course = retrieveCourse();
 
-        if(student == null || course == null){
-            System.out.println("Sorry, the student and/or course you have specified does not exist.");
+        if (student == null || course == null) {
+            System.out.println("I'm sorry, the student and/or course you have specified does not exist.");
         } else {
             course.unregister(student);
             System.out.println("Unregistration complete.");
@@ -395,47 +406,223 @@ public class App {
     }
 
 
-
-
     //--------------------------------------------------
     private static void findStudentByEmail() {
+
+        System.out.println("You have chosen to find a student by e-mail.\n");
+
+        String reply = getReply("Please input e-mail address: ");
+        Student student = studentAccess.findByEmail(reply);
+        if (student == null) {
+            System.out.println("I'm sorry, the student you have specified does not exist.");
+        } else {
+            System.out.println(student.studentInfo());
+        }
+
+
     }
 
     private static void findStudentById() {
+        System.out.println("You have chosen to find a student by Id.\n");
+
+        String reply = getReply("Please input Id: ");
+        Student student = studentAccess.findById(Integer.parseInt(reply));
+        if (student == null) {
+            System.out.println("I'm sorry, the student you have specified does not exist.");
+        } else {
+            System.out.println(student.studentInfo());
+        }
+
     }
 
     private static void findStudentsByName() {
+        System.out.println("You have chosen to find one or more students by name.\n");
+
+        String reply = getReply("Please input name: ");
+        List<Student> students = studentAccess.findByName(reply);
+        if (students.size() <= 0) {
+            System.out.println("I'm sorry, the student you have specified does not exist.");
+        } else {
+            for (Student student : students) {
+                System.out.println(student.studentInfo());
+            }
+
+        }
     }
 
     private static void findAllStudents() {
+        System.out.println("You have chosen to list all students.\n");
+
+        List<Student> students = studentAccess.findAll();
+        if (students.size() <= 0) {
+            System.out.println("There are no students in the system currently.");
+        } else {
+            for (Student student : students) {
+                System.out.println(student.studentInfo());
+            }
+
+        }
     }
 
     private static void findCourseById() {
+        System.out.println("You have chosen to find a course by Id.\n");
+
+        String reply = getReply("Please input Id: ");
+        Course course = courseAccess.findById(Integer.parseInt(reply));
+        if (course == null) {
+            System.out.println("I'm sorry, the course you have specified does not exist.");
+        } else {
+            System.out.println(course.courseInfo());
+        }
     }
 
     private static void findCoursesByName() {
+        System.out.println("You have chosen to find one or more courses by name.\n");
+
+        String reply = getReply("Please input name: ");
+        List<Course> courses = courseAccess.findByName(reply);
+        if (courses.size() <= 0) {
+            System.out.println("I'm sorry, the course you have specified does not exist.");
+        } else {
+            for (Course course : courses) {
+                System.out.println(course.courseInfo());
+            }
+
+        }
     }
 
     private static void findAllCourses() {
+        System.out.println("You have chosen to list all courses.\n");
+
+        List<Course> courses = courseAccess.findAll();
+        if (courses.size() <= 0) {
+            System.out.println("There are no courses in the system currently.");
+        } else {
+            for (Course course : courses) {
+                System.out.println(course.courseInfo());
+            }
+
+        }
     }
 
     //--------------------------------------------------
     private static void changeStudentName() {
+        System.out.println("You have chosen to change a student's name.\n");
+        Student student = retrieveStudent();
+
+        if(student==null){
+            System.out.println("I'm sorry, the student you have specified does not exist.");
+        } else{
+            String currentName = student.getName();
+            System.out.println("The student's current name is "+ currentName + ".");
+            String newName = getReply("Please input a new name. ");
+
+            student.setName(newName);
+            System.out.println("New name set.");
+        }
     }
 
     private static void changeStudentEmail() {
+        System.out.println("You have chosen to change a student's e-mail address.\n");
+        Student student = retrieveStudent();
+
+        if(student==null){
+            System.out.println("I'm sorry, the student you have specified does not exist.");
+        } else{
+            String currentEmail = student.getEmail();
+            System.out.println("The student's current e-mail address is "+ currentEmail + ".");
+            String newEmail = getReply("Please input a new e-mail address. ");
+
+            student.setEmail(newEmail);
+            System.out.println("New e-mail address set.");
+        }
     }
 
     private static void changeStudentaddress() {
+        System.out.println("You have chosen to change a student's address.\n");
+
+        Student student = retrieveStudent();
+
+        if(student==null){
+            System.out.println("I'm sorry, the student you have specified does not exist.");
+        } else{
+            String currentAddress = student.getAddress();
+            System.out.println("The student's current address is "+ currentAddress + ".");
+            String newAddress = getReply("Please input a new address. ");
+
+            student.setAddress(newAddress);
+            System.out.println("New address set.");
+        }
     }
 
     private static void changeCourseName() {
+        System.out.println("You have chosen to change a course's name.\n");
+        Course course = retrieveCourse();
+
+        if(course==null){
+            System.out.println("I'm sorry, the course you have specified does not exist.");
+        } else{
+            String currentName = course.getCourseName();
+            System.out.println("The course's current name is "+ currentName + ".");
+            String newName = getReply("Please input a new name. ");
+
+            course.setCourseName(newName);
+            System.out.println("New name set.");
+        }
     }
 
     private static void changeCourseLength() {
+        System.out.println("You have chosen to change a course's duration.\n");
+        Course course = retrieveCourse();
+
+        int newLength = 0;
+        boolean legitValue = true;
+
+        if(course==null){
+            System.out.println("I'm sorry, the course you have specified does not exist.");
+        } else{
+            int currentLength = course.getWeekDuration();
+            System.out.println("The course's current duration is "+ currentLength + " weeks.");
+
+            try {
+                newLength = Integer.parseInt(getReply("Please input a new duration in weeks. (Numbers only.) "));
+            } catch(Exception e) {
+                legitValue = false;
+                System.out.println("I'm sorry, course duration needs to be a number.");
+            }
+
+            if(legitValue) {
+                course.setWeekDuration(newLength);
+                System.out.println("New duration set.");
+            }
+        }
     }
 
     private static void changeCourseDate() {
+        System.out.println("You have chosen to set a different starting date for a course.\n");
+        Course course = retrieveCourse();
+
+        LocalDate newDate = null;
+        boolean legitValue = true;
+
+        if(course==null){
+            System.out.println("I'm sorry, the course you have specified does not exist.");
+        } else{
+            LocalDate currentDate = course.getStartDate();
+            System.out.println("The course's current starting date is "+ currentDate + ".");
+
+            try {
+                newDate = LocalDate.parse(getReply("Please input a new starting date. (YYYY-MM-DD) "));
+            } catch(Exception e) {
+                legitValue = false;
+                System.out.println("New starting date not accepted. Please follow specified standard.");
+            }
+
+            if(legitValue) {
+                course.setStartDate(newDate);
+                System.out.println("New starting date set.");
+            }
+        }
     }
 
 
