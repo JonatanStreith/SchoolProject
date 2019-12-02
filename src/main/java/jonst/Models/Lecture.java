@@ -1,6 +1,7 @@
 package jonst.Models;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Lecture {
@@ -20,6 +21,7 @@ public class Lecture {
         this.subject = subject;
         this.date = date;
         id = ++idCounter;
+        teachers = new ArrayList<>();
         assignedToCourse = false;
     }
 
@@ -55,6 +57,10 @@ public class Lecture {
 
     public boolean setAssignedTo(Course assignedTo) {
         this.assignedTo = assignedTo;
+        if(assignedTo != null)
+            assignedToCourse = true;
+        else
+            assignedToCourse = false;
         return true;
     }
 

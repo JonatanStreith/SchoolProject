@@ -94,16 +94,21 @@ public class Course {
 
     public boolean addLecture(Lecture lecture){
         lectures.add(lecture);
-        lecture.setAssignedToCourse(true);
         lecture.setAssignedTo(this);
         return true;
     }
 
     public boolean removeLecture(Lecture lecture){
-        lectures.remove(lecture);
-        lecture.setAssignedToCourse(false);
-        lecture.setAssignedTo(null);
-        return true;
+        if(lectures.contains(lecture)) {
+            lectures.remove(lecture);
+            lecture.setAssignedTo(null);
+            return true;
+        }
+        else {
+            System.out.println("That lecture has already been removed or is assigned to a different course.");
+            return false;
+        }
+
     }
 
 

@@ -13,6 +13,8 @@ public class CourseTest {
 
     Course testCourse;
     Student testStudent;
+    Lecture testLecture;
+    Teacher testTeacher;
 
     @Before
     public void setUp() throws Exception {
@@ -20,6 +22,10 @@ public class CourseTest {
         testCourse = new Course("Underwater basket weaving", LocalDate.parse("2020-04-11"), 4);
 
         testStudent = new Student("Bosse", "bosse@hotmail.com", "Almgatan 4");
+
+        testLecture = new Lecture("Squaredancing", LocalDate.parse("1999-09-09"));
+
+        testTeacher = new Teacher("Clara Oswald", "XximpossiblegirlxX@tardis.net", "The TARDIS");
 
     }
 
@@ -46,13 +52,50 @@ public class CourseTest {
 
         testCourse.register(testStudent);
 
+
         assertTrue(testCourse.getStudents().size() == 1);           //List size should now be 1.
         assertEquals("Bosse", testCourse.getStudents().get(0).getName());     //First entry should be "Bosse".
+
+        assertTrue(testStudent.getCourseList().contains(testCourse));   //Check that the student now has the course in their list
 
         testCourse.unregister(testStudent);
 
         assertTrue(testCourse.getStudents().size() == 0);   //Ensure that the student list is empty again.
+        assertFalse(testStudent.getCourseList().contains(testCourse));
 
+    }
+
+    @Test
+    public void supervisorTest() {
+        boolean success = testCourse.assignSupervisor(testTeacher);
+
+        assertTrue(success);
+        assertNotNull(testCourse.getSupervisor());
+        assertEquals("Clara Oswald", testCourse.getSupervisor().getName());
+
+        success = testCourse.unassignSupervisor();
+        assertTrue(success);
+        assertNull(testCourse.getSupervisor());
+
+    }
+
+    @Test
+    public void addLectureTest() {
+        int before = testCourse.getLectures().size();
+        boolean success = testCourse.addLecture(testLecture);
+        int after = testCourse.getLectures().size();
+
+        assertTrue(success);
+        assertTrue(after == before +1);
+
+        success = testCourse.removeLecture(testLecture);
+        int end = testCourse.getLectures().size();
+
+        assertTrue(success);
+        assertTrue(end == after -1);
+
+        success = testCourse.removeLecture(testLecture);
+        assertFalse(success);
 
     }
 

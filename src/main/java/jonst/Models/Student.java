@@ -66,4 +66,8 @@ public class Student {
         courseList.remove(course);
         return true;
     }
+
+    public List<Course> getCourseList() {
+        return courseList;
+    }
 }

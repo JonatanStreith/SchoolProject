@@ -70,7 +70,7 @@ public class LectureDaoList implements LectureDao {
         return false;
     }
 
-    public int getNumberOfLecture(){
+    public int getNumberOfLectures(){
         return lectures.size();
     }
 }
