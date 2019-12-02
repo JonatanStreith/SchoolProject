@@ -13,6 +13,7 @@ public class Course {
     private LocalDate startDate;
     private int weekDuration;
     private List<Student> students;
+    private Teacher supervisor;
 
     public Course(String courseName, LocalDate startDate, int weekDuration) {
         this.courseName = courseName;
@@ -24,11 +25,13 @@ public class Course {
 
     public boolean register(Student student){
         students.add(student);
-        return true;
+        student.register(this);          //When a course registers a student, the student also registers the course.
+        return true;                             //Important to not call the methods improperly. But this should fulfill the "only calling one method" requirement.
     }
 
     public boolean unregister(Student student){
         students.remove(student);
+        student.unregister(this);
         return true;
     }
 
@@ -69,8 +72,17 @@ public class Course {
         return students;
     }
 
+    public boolean assignSupervisor(Teacher supervisor){
+        this.supervisor = supervisor;
+        return true;
+    }
+
+    public boolean unassignSupervisor(){
+        supervisor = null;
+        return true;
+    }
+
     public String courseInfo(){
         return ("(" + getId() + ") " + getCourseName() + "; starts " + getStartDate() + ", duration: " + getWeekDuration() + " weeks.");
-
     }
 }

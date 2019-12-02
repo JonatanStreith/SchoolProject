@@ -1,9 +1,13 @@
 package jonst;
 
 import jonst.Dao.CourseDaoList;
+import jonst.Dao.LectureDaoList;
 import jonst.Dao.StudentDaoList;
+import jonst.Dao.TeacherDaoList;
 import jonst.Models.Course;
+import jonst.Models.Lecture;
 import jonst.Models.Student;
+import jonst.Models.Teacher;
 
 
 import java.time.LocalDate;
@@ -15,6 +19,8 @@ public class App {
 
     public static StudentDaoList studentAccess = new StudentDaoList();
     public static CourseDaoList courseAccess = new CourseDaoList();
+    public static TeacherDaoList teacherAccess = new TeacherDaoList();
+    public static LectureDaoList lectureAccess = new LectureDaoList();
 
     public static void main(String[] args) {
         System.out.println("Welcome, school administrator!");
@@ -77,7 +83,9 @@ public class App {
 
             System.out.println("\nWhat would you like to do?\n");
             System.out.println("1: Create new student.");
-            System.out.println("2: Create new course.");
+            System.out.println("2: Create new teacher.");
+            System.out.println("3: Create new course.");
+            System.out.println("4: Create new lecture.");
             System.out.println("\nX: Return to previous menu.\n");
 
             String input = inputReader.nextLine().toUpperCase();
@@ -87,14 +95,14 @@ public class App {
                     newStudent();
                     break;
                 case "2":
+                    newTeacher();
+                    break;
+                case "3":
                     newCourse();
                     break;
-//                case "3":
-//                    infomenu();
-//                    break;
-//                case "4":
-//                    editMenu();
-//                    break;
+                case "4":
+                    newLecture();
+                    break;
                 case "X":
                     System.out.println("Returning to previous menu.");
                     loop = false;
@@ -121,6 +129,12 @@ public class App {
             System.out.println("\nWhat would you like to do?\n");
             System.out.println("1: Register a student to a course.");
             System.out.println("2: Unregister a student from a course.");
+            System.out.println("3: Assign a teacher as a course supervisor.");
+            System.out.println("4: Unassign a course supervisor.");
+            System.out.println("5: Register a teacher to a specific lecture.");
+            System.out.println("6: Unregister a teacher from a specific lecture.");
+
+
             System.out.println("\nX: Return to previous menu.\n");
 
             String input = inputReader.nextLine().toUpperCase();
@@ -132,12 +146,18 @@ public class App {
                 case "2":
                     unregisterStudent();
                     break;
-//                case "3":
-//                    infomenu();
-//                    break;
-//                case "4":
-//                    editMenu();
-//                    break;
+                case "3":
+                    assignSupervisor();
+                    break;
+                case "4":
+                    unassignSupervisor();
+                    break;
+                case "5":
+                    registerLectureTeacher();
+                    break;
+                case "6":
+                    unregisterLectureTeacher();
+                    break;
                 case "X":
                     System.out.println("Returning to previous menu.");
                     loop = false;
@@ -167,9 +187,20 @@ public class App {
             System.out.println("3: Find all students by a given name. (Will return a list.)");
             System.out.println("4: List all students. (Will return a list. WARNING: May be long.)");
             System.out.println("");
-            System.out.println("5: Find a course through its Id.");
-            System.out.println("6: Find all courses by a given name. (Will return a list.)");
-            System.out.println("7: List all courses. (Will return a list. WARNING: May be long.)");
+            System.out.println("5: Find a teacher through their e-mail.");
+            System.out.println("6: Find a teacher through their Id.");
+            System.out.println("7: Find all teachers by a given name. (Will return a list.)");
+            System.out.println("8: List all teachers. (Will return a list. WARNING: May be long.)");
+            System.out.println("");
+            System.out.println("9: Find a course through its Id.");
+            System.out.println("10: Find all courses by a given name. (Will return a list.)");
+            System.out.println("11: Find all courses by a given date. (Will return a list.)");
+            System.out.println("12: List all courses. (Will return a list. WARNING: May be long.)");
+            System.out.println("");
+            System.out.println("13: Find a lecture through its Id.");
+            System.out.println("14: Find all lectures by a given subject. (Will return a list.)");
+            System.out.println("15: Find all lecture by a given date. (Will return a list.)");
+            System.out.println("16: List all lectures. (Will return a list. WARNING: May be long.)");
 
             System.out.println("\nX: Return to previous menu.\n");
 
@@ -188,15 +219,47 @@ public class App {
                 case "4":
                     findAllStudents();
                     break;
+
                 case "5":
-                    findCourseById();
+                    findTeacherByEmail();
                     break;
                 case "6":
-                    findCoursesByName();
+                    findTeacherById();
+
                     break;
                 case "7":
+                    findTeachersByName();
+                    break;
+                case "8":
+                    findAllTeachers();
+                    break;
+
+                case "9":
+                    findCourseById();
+                    break;
+                case "10":
+                    findCoursesByName();
+                    break;
+                case "11":
+                    findCoursesByDate();
+                    break;
+                case "12":
                     findAllCourses();
                     break;
+
+                case "13":
+                    findLectureById();
+                    break;
+                case "14":
+                    findLecturesBySubject();
+                    break;
+                case "15":
+                    findLecturesByDate();
+                    break;
+                case "16":
+
+                    break;
+
 
                 case "X":
                     System.out.println("Returning to previous menu.");
@@ -224,9 +287,16 @@ public class App {
             System.out.println("2: Change student e-mail.");
             System.out.println("3: Change student address.");
             System.out.println("");
-            System.out.println("4: Change course name.");
-            System.out.println("5: Change course length (by weeks).");
-            System.out.println("6: Change course starting date.");
+            System.out.println("4: Change teacher name.");
+            System.out.println("5: Change teacher e-mail.");
+            System.out.println("6: Change teacher address.");
+            System.out.println("");
+            System.out.println("7: Change course name.");
+            System.out.println("8: Change course length (by weeks).");
+            System.out.println("9: Change course starting date.");
+            System.out.println("");
+            System.out.println("10: Change lecture subject.");
+            System.out.println("11: Change lecture date.");
 
 
             System.out.println("\nX: Return to previous menu.\n");
@@ -241,17 +311,36 @@ public class App {
                     changeStudentEmail();
                     break;
                 case "3":
-                    changeStudentaddress();
+                    changeStudentAddress();
                     break;
+
                 case "4":
-                    changeCourseName();
+                    changeTeacherName();
                     break;
                 case "5":
-                    changeCourseLength();
+                    changeTeacherEmail();
                     break;
                 case "6":
+                    changeTeacherAddress();
+                    break;
+
+                case "7":
+                    changeCourseName();
+                    break;
+                case "8":
+                    changeCourseLength();
+                    break;
+                case "9":
                     changeCourseDate();
                     break;
+
+                case "10":
+                    changeLectureSubject();
+                    break;
+                case "11":
+                    changeLectureDate();
+                    break;
+
 
                 case "X":
                     System.out.println("Returning to previous menu.");
@@ -311,8 +400,49 @@ public class App {
         }
     }
 
+
+    private static Teacher retrieveTeacher() {
+        System.out.println("Please specify teacher, and prefix by method of finding them. (Example: Id: 1; Name: Bob Dylan; E-mail: bob@bob.com.");
+
+        while (true) {
+            String reply = getReply("Teacher? ");
+            String[] replyArray;
+            String method = "";
+            String input = "";
+            try {
+                replyArray = reply.split(": ");
+                method = replyArray[0];
+                input = replyArray[1];
+            } catch (Exception e) {
+                System.out.println("I'm sorry, that's not correct syntax.");
+                continue;
+            }
+
+
+            switch (method) {
+                case "Id":
+                    return teacherAccess.findById(Integer.parseInt(input));
+
+                case "Name":
+                    List<Teacher> resultList = teacherAccess.findByName(input);
+                    if (resultList.size() > 0)
+                        return resultList.get(0);                       //It will automatically return the first teacher found. Don't like it?
+                    else                                                //Has multiple teachers by the same name and want to get someone else?
+                        return null;                                    //Tough! Use Id like a grownup.
+
+                case "E-mail":
+                    return teacherAccess.findByEmail(input);
+
+                default:
+                    System.out.println("I'm sorry, that's not an acceptable method of retrieval.");
+                    break;
+            }
+        }
+    }
+
+
     private static Course retrieveCourse() {
-        System.out.println("Please specify course, and prefix by method of finding it. (Example: Id: 1; Name: Math 101.");
+        System.out.println("Please specify course, and prefix by method of finding it. (Example: Id: 1; Name: Math 101; Date: 2020-01-01");
 
         while (true) {
             String reply = getReply("Course? ");
@@ -320,6 +450,7 @@ public class App {
             String[] replyArray;
             String method = "";
             String input = "";
+            List<Course> resultList;
 
             try {
                 replyArray = reply.split(": ");
@@ -335,11 +466,80 @@ public class App {
                     return courseAccess.findById(Integer.parseInt(input));
 
                 case "Name":
-                    List<Course> resultList = courseAccess.findByName(input);
+                    resultList = courseAccess.findByName(input);
                     if (resultList.size() > 0)
-                        return resultList.get(0);                       //It will automatically return the first course found. Don't like it?
-                    else                                                //Has multiple courses by the same name and want to get someone else?
-                        return null;                                    //Tough! Use Id like a grownup.
+                        return resultList.get(0);
+                    else
+                        return null;
+
+                case "Date":
+                    LocalDate date = null;
+
+                    try {
+                        date = LocalDate.parse(input);
+                    } catch (Exception e) {
+                        System.out.println("I'm sorry, that date was not typed correctly.");
+                        break;
+                    }
+                    resultList = courseAccess.findByDate(date);
+                    if (resultList.size() > 0)
+                        return resultList.get(0);
+                    else
+                        return null;
+
+
+                default:
+                    System.out.println("I'm sorry, that's not an acceptable method of retrieval.");
+                    break;
+            }
+        }
+    }
+
+    private static Lecture retrieveLecture() {
+        System.out.println("Please specify lecture, and prefix by method of finding it. (Example: Id: 1; Subject: Exceptions; Date: 2020-01-01");
+
+        while (true) {
+            String reply = getReply("Lecture? ");
+
+            String[] replyArray;
+            String method = "";
+            String input = "";
+            List<Lecture> resultList;
+
+            try {
+                replyArray = reply.split(": ");
+                method = replyArray[0];
+                input = replyArray[1];
+            } catch (Exception e) {
+                System.out.println("I'm sorry, that's not correct syntax.");
+                continue;
+            }
+
+            switch (method) {
+                case "Id":
+                    return lectureAccess.findById(Integer.parseInt(input));
+
+                case "Subject":
+                    resultList = lectureAccess.findBySubject(input);
+                    if (resultList.size() > 0)
+                        return resultList.get(0);
+                    else
+                        return null;
+
+                case "Date":
+                    LocalDate date = null;
+
+                    try {
+                        date = LocalDate.parse(input);
+                    } catch (Exception e) {
+                        System.out.println("I'm sorry, that date was not typed correctly.");
+                        break;
+                    }
+                    resultList = lectureAccess.findByDate(date);
+                    if (resultList.size() > 0)
+                        return resultList.get(0);
+                    else
+                        return null;
 
 
                 default:
@@ -362,6 +562,19 @@ public class App {
         studentAccess.saveStudent(newStudent);
 
         System.out.println("Student by the name of \"" + name + "\" has been created in the system under Id " + newStudent.getId() + ".");
+    }
+
+    private static void newTeacher() {
+
+        String name = getReply("Teacher's name? ");
+        String email = getReply("Teacher's e-mail address? ");
+        String address = getReply("Teacher's physical address? ");
+
+        Teacher newTeacher = new Teacher(name, email, address);
+
+        teacherAccess.saveTeacher(newTeacher);
+
+        System.out.println("Teacher by the name of \"" + name + "\" has been created in the system under Id " + newTeacher.getId() + ".");
 
     }
 
@@ -389,6 +602,31 @@ public class App {
             System.out.println("Course by the name of \"" + name + "\" has been created in the system under Id " + newCourse.getId() + ".");
         }
     }
+
+    private static void newLecture() {
+
+        boolean legitDate = true;
+        String subject = "";
+        LocalDate date = null;
+
+        try {
+            subject = getReply("Lecture subject? ");
+            date = LocalDate.parse(getReply("Date? (YYYY-MM-DD) "));
+
+        } catch (Exception e) {
+            legitDate = false;
+            System.out.println("Starting date not accepted. Please follow specified standard.");
+        }
+
+        if (legitDate) {
+            Lecture newLecture = new Lecture(subject, date);
+
+            lectureAccess.saveLecture(newLecture);
+
+            System.out.println("Lecture by the subject of \"" + subject + "\" has been created in the system under Id " + newLecture.getId() + ".");
+        }
+    }
+
 
     //--------------------------------------------------
     private static void registerStudent() {
@@ -422,6 +660,71 @@ public class App {
         }
     }
 
+
+    private static void assignSupervisor() {
+
+        System.out.println("You have chosen to assign a supervisor.\n");
+
+        Teacher supervisor = retrieveTeacher();
+        Course course = retrieveCourse();
+
+        if (supervisor == null || course == null) {
+            System.out.println("I'm sorry, the teacher and/or course you have specified does not exist.");
+        } else {
+            course.assignSupervisor(supervisor);
+            System.out.println("Supervisor assigned.");
+        }
+
+    }
+
+
+    private static void unassignSupervisor() {
+
+        System.out.println("You have chosen to unassign a supervisor.\n");
+
+        Course course = retrieveCourse();
+
+        if (course == null) {
+            System.out.println("I'm sorry, the course you have specified does not exist.");
+        } else {
+            course.unassignSupervisor();
+            System.out.println("Supervisor unassigned. The course is now unsupervised; please assign a new supervisor as soon as possible.");
+        }
+
+    }
+
+    private static void registerLectureTeacher(){
+
+        System.out.println("You have chosen to register a teacher to a lecture.\n");
+
+        Lecture lecture = retrieveLecture();
+        Teacher teacher = retrieveTeacher();
+
+        if (lecture == null || teacher == null) {
+            System.out.println("I'm sorry, the lecture and/or teacher you have specified does not exist.");
+        } else {
+            lecture.registerTeacher(teacher);
+            System.out.println("Teacher registered.");
+        }
+
+    }
+
+
+    private static void unregisterLectureTeacher(){
+
+        System.out.println("You have chosen to unregister a teacher to a lecture.\n");
+
+        Lecture lecture = retrieveLecture();
+        Teacher teacher = retrieveTeacher();
+
+        if (lecture == null || teacher == null) {
+            System.out.println("I'm sorry, the lecture and/or teacher you have specified does not exist.");
+        } else {
+            lecture.unregisterTeacher(teacher);
+            System.out.println("Teacher unregistered.");
+        }
+
+    }
 
     //--------------------------------------------------
     private static void findStudentByEmail() {
@@ -555,7 +858,7 @@ public class App {
         }
     }
 
-    private static void changeStudentaddress() {
+    private static void changeStudentAddress() {
         System.out.println("You have chosen to change a student's address.\n");
 
         Student student = retrieveStudent();
