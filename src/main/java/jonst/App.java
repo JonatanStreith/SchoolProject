@@ -133,6 +133,8 @@ public class App {
             System.out.println("4: Unassign a course supervisor.");
             System.out.println("5: Register a teacher to a specific lecture.");
             System.out.println("6: Unregister a teacher from a specific lecture.");
+            System.out.println("7: Assign a lecture to a specific course.");
+            System.out.println("8: Unassign a lecture from a specific course.");
 
 
             System.out.println("\nX: Return to previous menu.\n");
@@ -158,6 +160,13 @@ public class App {
                 case "6":
                     unregisterLectureTeacher();
                     break;
+                case "7":
+                    registerLectureCourse();
+                    break;
+                case "8":
+                    unregisterLectureCourse();
+                    break;
+
                 case "X":
                     System.out.println("Returning to previous menu.");
                     loop = false;
@@ -257,7 +266,7 @@ public class App {
                     findLecturesByDate();
                     break;
                 case "16":
-
+                    findAllLectures();
                     break;
 
 
@@ -693,7 +702,7 @@ public class App {
 
     }
 
-    private static void registerLectureTeacher(){
+    private static void registerLectureTeacher() {
 
         System.out.println("You have chosen to register a teacher to a lecture.\n");
 
@@ -710,7 +719,7 @@ public class App {
     }
 
 
-    private static void unregisterLectureTeacher(){
+    private static void unregisterLectureTeacher() {
 
         System.out.println("You have chosen to unregister a teacher to a lecture.\n");
 
@@ -726,7 +735,47 @@ public class App {
 
     }
 
+    private static void registerLectureCourse() {
+
+        System.out.println("You have chosen to register a lecture to a course.\n");
+
+        Lecture lecture = retrieveLecture();
+        Course course = retrieveCourse();
+
+        if (lecture == null || course == null) {
+            System.out.println("I'm sorry, the lecture and/or teacher you have specified does not exist.");
+        } else if (lecture.isAssignedToCourse()) {
+            System.out.println("I'm sorry, the lecture you have chosen is already assigned to a course.");
+        } else {
+            course.addLecture(lecture);
+            System.out.println("Lecture registered.");
+        }
+    }
+
+    private static void unregisterLectureCourse() {
+
+        System.out.println("You have chosen to unregister a lecture from a course.\n");
+
+        Lecture lecture = retrieveLecture();
+        Course course = retrieveCourse();
+
+        if (lecture == null || course == null) {
+            System.out.println("I'm sorry, the lecture and/or teacher you have specified does not exist.");
+        } else if (!lecture.isAssignedToCourse()) {
+            System.out.println("I'm sorry, the lecture you have chosen is already unregistered.");
+        } else if (lecture.getAssignedTo() != course) {
+            System.out.println("I'm sorry, the lecture you have chosen isn't registered to the course you have chosen.");
+        } else {
+            course.addLecture(lecture);
+            System.out.println("Lecture unregistered.");
+        }
+
+    }
+
+
     //--------------------------------------------------
+
+
     private static void findStudentByEmail() {
 
         System.out.println("You have chosen to find a student by e-mail.\n");
@@ -784,6 +833,65 @@ public class App {
         }
     }
 
+
+    private static void findTeacherByEmail() {
+
+        System.out.println("You have chosen to find a teacher by e-mail.\n");
+
+        String reply = getReply("Please input e-mail address: ");
+        Teacher teacher = teacherAccess.findByEmail(reply);
+        if (teacher == null) {
+            System.out.println("I'm sorry, the teacher you have specified does not exist.");
+        } else {
+            System.out.println(teacher.teacherInfo());
+        }
+
+
+    }
+
+    private static void findTeacherById() {
+        System.out.println("You have chosen to find a teacher by Id.\n");
+
+        String reply = getReply("Please input Id: ");
+        Teacher teacher = teacherAccess.findById(Integer.parseInt(reply));
+        if (teacher == null) {
+            System.out.println("I'm sorry, the teacher you have specified does not exist.");
+        } else {
+            System.out.println(teacher.teacherInfo());
+        }
+
+    }
+
+    private static void findTeachersByName() {
+        System.out.println("You have chosen to find one or more teachers by name.\n");
+
+        String reply = getReply("Please input name: ");
+        List<Teacher> teachers = teacherAccess.findByName(reply);
+        if (teachers.size() <= 0) {
+            System.out.println("I'm sorry, the teacher you have specified does not exist.");
+        } else {
+            for (Teacher teacher : teachers) {
+                System.out.println(teacher.teacherInfo());
+            }
+
+        }
+    }
+
+    private static void findAllTeachers() {
+        System.out.println("You have chosen to list all teachers.\n");
+
+        List<Teacher> teachers = teacherAccess.findAll();
+        if (teachers.size() <= 0) {
+            System.out.println("There are no teachers in the system currently.");
+        } else {
+            for (Teacher teacher : teachers) {
+                System.out.println(teacher.teacherInfo());
+            }
+
+        }
+    }
+
+
     private static void findCourseById() {
         System.out.println("You have chosen to find a course by Id.\n");
 
@@ -811,6 +919,32 @@ public class App {
         }
     }
 
+    private static void findCoursesByDate() {
+        System.out.println("You have chosen to find one or more courses by date.\n");
+
+        String reply = getReply("Please input date(YYYY-MM-DD): ");
+        LocalDate date = null;
+        boolean legitDate = true;
+
+        try {
+            date = LocalDate.parse(reply);
+        } catch (Exception e) {
+            System.out.println("I'm sorry, that date was not typed correctly.");
+            legitDate = false;
+        }
+
+        if (legitDate) {
+            List<Course> courses = courseAccess.findByDate(date);
+            if (courses.size() <= 0) {
+                System.out.println("I'm sorry, the course you have specified does not exist.");
+            } else {
+                for (Course course : courses) {
+                    System.out.println(course.courseInfo());
+                }
+            }
+        }
+    }
+
     private static void findAllCourses() {
         System.out.println("You have chosen to list all courses.\n");
 
@@ -824,6 +958,77 @@ public class App {
 
         }
     }
+
+
+
+
+    private static void findLectureById() {
+        System.out.println("You have chosen to find a lecture by Id.\n");
+
+        String reply = getReply("Please input Id: ");
+        Lecture lecture = lectureAccess.findById(Integer.parseInt(reply));
+        if (lecture == null) {
+            System.out.println("I'm sorry, the lecture you have specified does not exist.");
+        } else {
+            System.out.println(lecture.lectureInfo());
+        }
+    }
+
+    private static void findLecturesBySubject() {
+        System.out.println("You have chosen to find one or more courses by subject.\n");
+
+        String reply = getReply("Please input name: ");
+        List<Lecture> lectures = lectureAccess.findBySubject(reply);
+        if (lectures.size() <= 0) {
+            System.out.println("I'm sorry, the lecture you have specified does not exist.");
+        } else {
+            for (Lecture lecture : lectures) {
+                System.out.println(lecture.lectureInfo());
+            }
+
+        }
+    }
+
+    private static void findLecturesByDate() {
+        System.out.println("You have chosen to find one or more lectures by date.\n");
+
+        String reply = getReply("Please input date(YYYY-MM-DD): ");
+        LocalDate date = null;
+        boolean legitDate = true;
+
+        try {
+            date = LocalDate.parse(reply);
+        } catch (Exception e) {
+            System.out.println("I'm sorry, that date was not typed correctly.");
+            legitDate = false;
+        }
+
+        if (legitDate) {
+            List<Lecture> lectures = lectureAccess.findByDate(date);
+            if (lectures.size() <= 0) {
+                System.out.println("I'm sorry, the lecture you have specified does not exist.");
+            } else {
+                for (Lecture lecture : lectures) {
+                    System.out.println(lecture.lectureInfo());
+                }
+            }
+        }
+    }
+
+    private static void findAllLectures() {
+        System.out.println("You have chosen to list all lectures.\n");
+
+        List<Lecture> lectures = lectureAccess.findAll();
+        if (lectures.size() <= 0) {
+            System.out.println("There are no lectures in the system currently.");
+        } else {
+            for (Lecture lecture : lectures) {
+                System.out.println(lecture.lectureInfo());
+            }
+
+        }
+    }
+
 
     //--------------------------------------------------
     private static void changeStudentName() {
@@ -874,6 +1079,59 @@ public class App {
             System.out.println("New address set.");
         }
     }
+
+
+    private static void changeTeacherName() {
+        System.out.println("You have chosen to change a teacher's name.\n");
+        Teacher teacher = retrieveTeacher();
+
+        if (teacher == null) {
+            System.out.println("I'm sorry, the teacher you have specified does not exist.");
+        } else {
+            String currentName = teacher.getName();
+            System.out.println("The teacher's current name is " + currentName + ".");
+            String newName = getReply("Please input a new name. ");
+
+            teacher.setName(newName);
+            System.out.println("New name set.");
+        }
+    }
+
+    private static void changeTeacherEmail() {
+        System.out.println("You have chosen to change a teacher's e-mail address.\n");
+        Teacher teacher = retrieveTeacher();
+
+        if (teacher == null) {
+            System.out.println("I'm sorry, the teacher you have specified does not exist.");
+        } else {
+            String currentEmail = teacher.getEmail();
+            System.out.println("The teacher's current e-mail address is " + currentEmail + ".");
+            String newEmail = getReply("Please input a new e-mail address. ");
+
+            teacher.setEmail(newEmail);
+            System.out.println("New e-mail address set.");
+        }
+    }
+
+    private static void changeTeacherAddress() {
+        System.out.println("You have chosen to change a teacher's address.\n");
+
+        Teacher teacher = retrieveTeacher();
+
+        if (teacher == null) {
+            System.out.println("I'm sorry, the teacher you have specified does not exist.");
+        } else {
+            String currentAddress = teacher.getAddress();
+            System.out.println("The teacher's current address is " + currentAddress + ".");
+            String newAddress = getReply("Please input a new address. ");
+
+            teacher.setAddress(newAddress);
+            System.out.println("New address set.");
+        }
+    }
+
+
+
 
     private static void changeCourseName() {
         System.out.println("You have chosen to change a course's name.\n");
@@ -932,7 +1190,7 @@ public class App {
             System.out.println("The course's current starting date is " + currentDate + ".");
 
             try {
-                newDate = LocalDate.parse(getReply("Please input a new starting date. (YYYY-MM-DD) "));
+                newDate = LocalDate.parse(getReply("Please input a new starting date (YYYY-MM-DD). "));
             } catch (Exception e) {
                 legitValue = false;
                 System.out.println("New starting date not accepted. Please follow specified standard.");
@@ -945,5 +1203,46 @@ public class App {
         }
     }
 
+    private static void changeLectureSubject() {
+        System.out.println("You have chosen to change a lecture's subject.\n");
+        Lecture lecture = retrieveLecture();
 
+        if (lecture == null) {
+            System.out.println("I'm sorry, the lecture you have specified does not exist.");
+        } else {
+            String currentSubject = lecture.getSubject();
+            System.out.println("The lecture's current subject is " + currentSubject + ".");
+            String newSubject = getReply("Please input a new subject. ");
+
+            lecture.setSubject(newSubject);
+            System.out.println("New subject set.");
+        }
+    }
+
+    private static void changeLectureDate() {
+        System.out.println("You have chosen to set a different  date for a lecture.\n");
+        Lecture lecture = retrieveLecture();
+
+        LocalDate newDate = null;
+        boolean legitValue = true;
+
+        if (lecture == null) {
+            System.out.println("I'm sorry, the lecture you have specified does not exist.");
+        } else {
+            LocalDate currentDate = lecture.getDate();
+            System.out.println("The lecture's current  date is " + currentDate + ".");
+
+            try {
+                newDate = LocalDate.parse(getReply("Please input a new date (YYYY-MM-DD). "));
+            } catch (Exception e) {
+                legitValue = false;
+                System.out.println("New date not accepted. Please follow specified standard.");
+            }
+
+            if (legitValue) {
+                lecture.setDate(newDate);
+                System.out.println("New date set.");
+            }
+        }
+    }
 }

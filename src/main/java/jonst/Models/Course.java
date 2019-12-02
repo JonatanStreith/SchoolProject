@@ -14,6 +14,7 @@ public class Course {
     private int weekDuration;
     private List<Student> students;
     private Teacher supervisor;
+    private List<Lecture> lectures;
 
     public Course(String courseName, LocalDate startDate, int weekDuration) {
         this.courseName = courseName;
@@ -21,6 +22,7 @@ public class Course {
         this.weekDuration = weekDuration;
         id = ++idCounter;
         students = new ArrayList();
+        lectures = new ArrayList();
     }
 
     public boolean register(Student student){
@@ -72,6 +74,14 @@ public class Course {
         return students;
     }
 
+    public Teacher getSupervisor() {
+        return supervisor;
+    }
+
+    public List<Lecture> getLectures() {
+        return lectures;
+    }
+
     public boolean assignSupervisor(Teacher supervisor){
         this.supervisor = supervisor;
         return true;
@@ -81,6 +91,22 @@ public class Course {
         supervisor = null;
         return true;
     }
+
+    public boolean addLecture(Lecture lecture){
+        lectures.add(lecture);
+        lecture.setAssignedToCourse(true);
+        lecture.setAssignedTo(this);
+        return true;
+    }
+
+    public boolean removeLecture(Lecture lecture){
+        lectures.remove(lecture);
+        lecture.setAssignedToCourse(false);
+        lecture.setAssignedTo(null);
+        return true;
+    }
+
+
 
     public String courseInfo(){
         return ("(" + getId() + ") " + getCourseName() + "; starts " + getStartDate() + ", duration: " + getWeekDuration() + " weeks.");

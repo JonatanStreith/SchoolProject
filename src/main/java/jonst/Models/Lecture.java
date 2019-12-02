@@ -11,12 +11,16 @@ public class Lecture {
     private String subject;
     private LocalDate date;
     private List<Teacher> teachers;
+    private Course assignedTo;
+
+    private boolean assignedToCourse;
+
 
     public Lecture(String subject, LocalDate date) {
         this.subject = subject;
         this.date = date;
         id = ++idCounter;
-
+        assignedToCourse = false;
     }
 
     public int getId() {
@@ -45,6 +49,24 @@ public class Lecture {
         return teachers;
     }
 
+    public Course getAssignedTo() {
+        return assignedTo;
+    }
+
+    public boolean setAssignedTo(Course assignedTo) {
+        this.assignedTo = assignedTo;
+        return true;
+    }
+
+    public boolean isAssignedToCourse() {
+        return assignedToCourse;
+    }
+
+    public boolean setAssignedToCourse(boolean assignedToCourse) {
+        this.assignedToCourse = assignedToCourse;
+        return true;
+    }
+
     public boolean registerTeacher(Teacher teacher) {
         teachers.add(teacher);
         return true;
@@ -53,5 +75,9 @@ public class Lecture {
     public boolean unregisterTeacher(Teacher teacher) {
         teachers.remove(teacher);
         return true;
+    }
+
+    public String lectureInfo(){
+        return ("(" + getId() + ") " + getSubject() + "; on date " + getDate() + ".");
     }
 }
