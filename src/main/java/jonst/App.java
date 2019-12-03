@@ -25,7 +25,6 @@ public class App {
         mainMenu();
     }
 
-
     //----------------------- Menus are here -------------------------------
 
     public static void mainMenu() {
@@ -70,7 +69,6 @@ public class App {
         }
     }
 
-
     private static void createMenu() {
         //This is the create objects menu. You can create students and courses from here.
 
@@ -113,7 +111,6 @@ public class App {
 
         }
     }
-
 
     private static void registerMenu() {
 
@@ -177,7 +174,6 @@ public class App {
 
         }
     }
-
 
     private static void infomenu() {
 
@@ -367,197 +363,6 @@ public class App {
         return reply;
     }
 
-    /*
-    private static Student retrieveStudent() {
-        System.out.println("Please specify student, and prefix by method of finding them. (Example: Id: 1; Name: Bob Dylan; E-mail: bob@bob.com.");
-
-        while (true) {
-            String reply = getReply("Student? ").toLowerCase();
-            String[] replyArray;
-            String method = "";
-            String input = "";
-            try {
-                replyArray = reply.split(": ");
-                method = replyArray[0];
-                input = replyArray[1];
-            } catch (Exception e) {
-                System.out.println("I'm sorry, that's not correct syntax.");
-                continue;
-            }
-
-
-            switch (method) {
-                case "id":
-                    return studentAccess.findById(Integer.parseInt(input));
-
-                case "name":
-                    List<Student> resultList = studentAccess.findByName(input);
-                    if (resultList.size() > 0)
-                        return resultList.get(0);                       //It will automatically return the first student found. Don't like it?
-                    else                                                //Has multiple students by the same name and want to get someone else?
-                        return null;                                    //Tough! Use Id like a grownup.
-
-                case "e-mail":
-                    return studentAccess.findByEmail(input);
-
-                default:
-                    System.out.println("I'm sorry, that's not an acceptable method of retrieval.");
-                    break;
-            }
-        }
-    }
-
-
-    private static Teacher retrieveTeacher() {
-        System.out.println("Please specify teacher, and prefix by method of finding them. (Example: Id: 1; Name: Bob Dylan; E-mail: bob@bob.com.");
-
-        while (true) {
-            String reply = getReply("Teacher? ").toLowerCase();
-            String[] replyArray;
-            String method = "";
-            String input = "";
-            try {
-                replyArray = reply.split(": ");
-                method = replyArray[0];
-                input = replyArray[1];
-            } catch (Exception e) {
-                System.out.println("I'm sorry, that's not correct syntax.");
-                continue;
-            }
-
-
-            switch (method) {
-                case "id":
-                    return teacherAccess.findById(Integer.parseInt(input));
-
-                case "name":
-                    List<Teacher> resultList = teacherAccess.findByName(input);
-                    if (resultList.size() > 0)
-                        return resultList.get(0);                       //It will automatically return the first teacher found. Don't like it?
-                    else                                                //Has multiple teachers by the same name and want to get someone else?
-                        return null;                                    //Tough! Use Id like a grownup.
-
-                case "e-mail":
-                    return teacherAccess.findByEmail(input);
-
-                default:
-                    System.out.println("I'm sorry, that's not an acceptable method of retrieval.");
-                    break;
-            }
-        }
-    }
-
-
-    private static Course retrieveCourse() {
-        System.out.println("Please specify course, and prefix by method of finding it. (Example: Id: 1; Name: Math 101; Date: 2020-01-01");
-
-        while (true) {
-            String reply = getReply("Course? ").toLowerCase();
-
-            String[] replyArray;
-            String method = "";
-            String input = "";
-            List<Course> resultList;
-
-            try {
-                replyArray = reply.split(": ");
-                method = replyArray[0];
-                input = replyArray[1];
-            } catch (Exception e) {
-                System.out.println("I'm sorry, that's not correct syntax.");
-                continue;
-            }
-
-            switch (method) {
-                case "id":
-                    return courseAccess.findById(Integer.parseInt(input));
-
-                case "name":
-                    resultList = courseAccess.findByName(input);
-                    if (resultList.size() > 0)
-                        return resultList.get(0);
-                    else
-                        return null;
-
-                case "date":
-                    LocalDate date = null;
-
-                    try {
-                        date = LocalDate.parse(input);
-                    } catch (Exception e) {
-                        System.out.println("I'm sorry, that date was not typed correctly.");
-                        break;
-                    }
-                    resultList = courseAccess.findByDate(date);
-                    if (resultList.size() > 0)
-                        return resultList.get(0);
-                    else
-                        return null;
-
-
-                default:
-                    System.out.println("I'm sorry, that's not an acceptable method of retrieval.");
-                    break;
-            }
-        }
-    }
-
-    private static Lecture retrieveLecture() {
-        System.out.println("Please specify lecture, and prefix by method of finding it. (Example: Id: 1; Name: Exceptions; Date: 2020-01-01");
-
-        while (true) {
-            String reply = getReply("Lecture? ").toLowerCase();
-
-            String[] replyArray;
-            String method = "";
-            String input = "";
-            List<Lecture> resultList;
-
-            try {
-                replyArray = reply.split(": ");
-                method = replyArray[0];
-                input = replyArray[1];
-            } catch (Exception e) {
-                System.out.println("I'm sorry, that's not correct syntax.");
-                continue;
-            }
-
-            switch (method) {
-                case "id":
-                    return lectureAccess.findById(Integer.parseInt(input));
-
-                case "name":
-                    resultList = lectureAccess.findByName(input);
-                    if (resultList.size() > 0)
-                        return resultList.get(0);
-                    else
-                        return null;
-
-                case "date":
-                    LocalDate date = null;
-
-                    try {
-                        date = LocalDate.parse(input);
-                    } catch (Exception e) {
-                        System.out.println("I'm sorry, that date was not typed correctly.");
-                        break;
-                    }
-                    resultList = lectureAccess.findByDate(date);
-                    if (resultList.size() > 0)
-                        return resultList.get(0);
-                    else
-                        return null;
-
-
-                default:
-                    System.out.println("I'm sorry, that's not an acceptable method of retrieval.");
-                    break;
-            }
-        }
-    }
-
-*/
-
     private static Object retrieve(String key) {
         switch (key) {
             case "student":
@@ -575,7 +380,7 @@ public class App {
         }
 
         while (true) {
-            String reply = getReply("Which "+key+"? ").toLowerCase();
+            String reply = getReply("Which " + key + "? ").toLowerCase();
 
             String[] replyArray;
             String method = "";
@@ -642,7 +447,6 @@ public class App {
         }
     }
 
-
     private static Object retrieveByName(String name, String key) {
         switch (key) {
             case "student":
@@ -674,8 +478,6 @@ public class App {
                 return null;
         }
     }
-
-
 
     private static Object retrieveByDate(String date, String key) {
 
@@ -709,7 +511,6 @@ public class App {
                 return null;
         }
     }
-
 
     //------------------- Here are the specific methods ----------------------------
 
@@ -788,8 +589,8 @@ public class App {
         }
     }
 
-
     //--------------------------------------------------
+
     private static void registerStudent() {
         System.out.println("You have chosen to register a student.\n");
 
@@ -804,7 +605,6 @@ public class App {
         }
 
     }
-
 
     private static void unregisterStudent() {
 
@@ -838,7 +638,6 @@ public class App {
 
     }
 
-
     private static void unassignSupervisor() {
 
         System.out.println("You have chosen to unassign a supervisor.\n");
@@ -853,6 +652,7 @@ public class App {
         }
 
     }
+
 
     private static void registerLectureTeacher() {
 
@@ -870,7 +670,6 @@ public class App {
 
     }
 
-
     private static void unregisterLectureTeacher() {
 
         System.out.println("You have chosen to unregister a teacher to a lecture.\n");
@@ -886,6 +685,7 @@ public class App {
         }
 
     }
+
 
     private static void registerLectureCourse() {
 
@@ -924,9 +724,7 @@ public class App {
 
     }
 
-
     //--------------------------------------------------
-
 
     private static void findStudentByEmail() {
 
@@ -1179,8 +977,8 @@ public class App {
         }
     }
 
-
     //--------------------------------------------------
+
     private static void changeStudentName() {
         System.out.println("You have chosen to change a student's name.\n");
         Student student = (Student) retrieve("student");
@@ -1350,6 +1148,7 @@ public class App {
             }
         }
     }
+
 
     private static void changeLectureSubject() {
         System.out.println("You have chosen to change a lecture's subject.\n");
