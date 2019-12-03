@@ -12,9 +12,9 @@ public class Teacher {
     private String address;
 
     public Teacher(String name, String email, String address) {
-        this.name = name;
-        this.email = email;
-        this.address = address;
+        setName(name);
+        setEmail(email);
+        setAddress(address);
         id = ++idCounter;
 
     }
@@ -27,24 +27,27 @@ public class Teacher {
         return name;
     }
 
-    public void setName(String name) {
+    public boolean setName(String name) {
         this.name = name;
+        return true;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public boolean setEmail(String email) {
         this.email = email;
+        return true;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public boolean setAddress(String address) {
         this.address = address;
+        return true;
     }
 
     public String teacherInfo(){

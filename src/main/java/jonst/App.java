@@ -39,7 +39,7 @@ public class App {
         boolean loop = true;
 
         while (loop) {
-
+            System.out.println("\n-------------------------------------------------------------------------------");
             System.out.println("\nWhat would you like to do?\n");
             System.out.println("1: Create entities.");
             System.out.println("2: Registering.");
@@ -80,7 +80,7 @@ public class App {
         boolean loop = true;
 
         while (loop) {
-
+            System.out.println("\n-------------------------------------------------------------------------------");
             System.out.println("\nWhat would you like to do?\n");
             System.out.println("1: Create new student.");
             System.out.println("2: Create new teacher.");
@@ -125,7 +125,7 @@ public class App {
         boolean loop = true;
 
         while (loop) {
-
+            System.out.println("\n-------------------------------------------------------------------------------");
             System.out.println("\nWhat would you like to do?\n");
             System.out.println("1: Register a student to a course.");
             System.out.println("2: Unregister a student from a course.");
@@ -189,7 +189,7 @@ public class App {
         boolean loop = true;
 
         while (loop) {
-
+            System.out.println("\n-------------------------------------------------------------------------------");
             System.out.println("\nWhat would you like to do?\n");
             System.out.println("1: Find a student through their e-mail.");
             System.out.println("2: Find a student through their Id.");
@@ -288,7 +288,7 @@ public class App {
         boolean loop = true;
 
         while (loop) {
-
+            System.out.println("\n-------------------------------------------------------------------------------");
             System.out.println("\nWhat would you like to do?\n");
             System.out.println("(Ids cannot be changed for security reasons.)\n");
 
@@ -374,7 +374,7 @@ public class App {
         System.out.println("Please specify student, and prefix by method of finding them. (Example: Id: 1; Name: Bob Dylan; E-mail: bob@bob.com.");
 
         while (true) {
-            String reply = getReply("Student? ");
+            String reply = getReply("Student? ").toLowerCase();
             String[] replyArray;
             String method = "";
             String input = "";
@@ -389,17 +389,17 @@ public class App {
 
 
             switch (method) {
-                case "Id":
+                case "id":
                     return studentAccess.findById(Integer.parseInt(input));
 
-                case "Name":
+                case "name":
                     List<Student> resultList = studentAccess.findByName(input);
                     if (resultList.size() > 0)
                         return resultList.get(0);                       //It will automatically return the first student found. Don't like it?
                     else                                                //Has multiple students by the same name and want to get someone else?
                         return null;                                    //Tough! Use Id like a grownup.
 
-                case "E-mail":
+                case "e-mail":
                     return studentAccess.findByEmail(input);
 
                 default:
@@ -414,7 +414,7 @@ public class App {
         System.out.println("Please specify teacher, and prefix by method of finding them. (Example: Id: 1; Name: Bob Dylan; E-mail: bob@bob.com.");
 
         while (true) {
-            String reply = getReply("Teacher? ");
+            String reply = getReply("Teacher? ").toLowerCase();
             String[] replyArray;
             String method = "";
             String input = "";
@@ -429,17 +429,17 @@ public class App {
 
 
             switch (method) {
-                case "Id":
+                case "id":
                     return teacherAccess.findById(Integer.parseInt(input));
 
-                case "Name":
+                case "name":
                     List<Teacher> resultList = teacherAccess.findByName(input);
                     if (resultList.size() > 0)
                         return resultList.get(0);                       //It will automatically return the first teacher found. Don't like it?
                     else                                                //Has multiple teachers by the same name and want to get someone else?
                         return null;                                    //Tough! Use Id like a grownup.
 
-                case "E-mail":
+                case "e-mail":
                     return teacherAccess.findByEmail(input);
 
                 default:
@@ -454,7 +454,7 @@ public class App {
         System.out.println("Please specify course, and prefix by method of finding it. (Example: Id: 1; Name: Math 101; Date: 2020-01-01");
 
         while (true) {
-            String reply = getReply("Course? ");
+            String reply = getReply("Course? ").toLowerCase();
 
             String[] replyArray;
             String method = "";
@@ -471,17 +471,17 @@ public class App {
             }
 
             switch (method) {
-                case "Id":
+                case "id":
                     return courseAccess.findById(Integer.parseInt(input));
 
-                case "Name":
+                case "name":
                     resultList = courseAccess.findByName(input);
                     if (resultList.size() > 0)
                         return resultList.get(0);
                     else
                         return null;
 
-                case "Date":
+                case "date":
                     LocalDate date = null;
 
                     try {
@@ -508,7 +508,7 @@ public class App {
         System.out.println("Please specify lecture, and prefix by method of finding it. (Example: Id: 1; Subject: Exceptions; Date: 2020-01-01");
 
         while (true) {
-            String reply = getReply("Lecture? ");
+            String reply = getReply("Lecture? ").toLowerCase();
 
             String[] replyArray;
             String method = "";
@@ -525,17 +525,17 @@ public class App {
             }
 
             switch (method) {
-                case "Id":
+                case "id":
                     return lectureAccess.findById(Integer.parseInt(input));
 
-                case "Subject":
+                case "subject":
                     resultList = lectureAccess.findBySubject(input);
                     if (resultList.size() > 0)
                         return resultList.get(0);
                     else
                         return null;
 
-                case "Date":
+                case "date":
                     LocalDate date = null;
 
                     try {
@@ -648,7 +648,7 @@ public class App {
             System.out.println("I'm sorry, the student and/or course you have specified does not exist.");
         } else {
             course.register(student);
-            System.out.println("Registration complete.");
+            System.out.println("Registration of student '"+student.getName()+"' to course '"+course.getCourseName()+"' complete.");
         }
 
     }
@@ -665,7 +665,7 @@ public class App {
             System.out.println("I'm sorry, the student and/or course you have specified does not exist.");
         } else {
             course.unregister(student);
-            System.out.println("Unregistration complete.");
+            System.out.println("Unregistration of student '"+student.getName()+"' from course '"+course.getCourseName()+"' complete.");
         }
     }
 
@@ -681,7 +681,7 @@ public class App {
             System.out.println("I'm sorry, the teacher and/or course you have specified does not exist.");
         } else {
             course.assignSupervisor(supervisor);
-            System.out.println("Supervisor assigned.");
+            System.out.println("Supervisor '"+supervisor.getName()+"' assigned to course '"+course.getCourseName()+"'.");
         }
 
     }
@@ -697,7 +697,7 @@ public class App {
             System.out.println("I'm sorry, the course you have specified does not exist.");
         } else {
             course.unassignSupervisor();
-            System.out.println("Supervisor unassigned. The course is now unsupervised; please assign a new supervisor as soon as possible.");
+            System.out.println("Supervisor unassigned from course '" + course.getCourseName() + "'. The course is now unsupervised; please assign a new supervisor as soon as possible.");
         }
 
     }
@@ -713,7 +713,7 @@ public class App {
             System.out.println("I'm sorry, the lecture and/or teacher you have specified does not exist.");
         } else {
             lecture.registerTeacher(teacher);
-            System.out.println("Teacher registered.");
+            System.out.println("Teacher '" +teacher.getName() + "' registered to lecture '"+lecture.getSubject() + "'.");
         }
 
     }
@@ -730,7 +730,7 @@ public class App {
             System.out.println("I'm sorry, the lecture and/or teacher you have specified does not exist.");
         } else {
             lecture.unregisterTeacher(teacher);
-            System.out.println("Teacher unregistered.");
+            System.out.println("Teacher '" +teacher.getName() + "' unregistered from lecture '"+lecture.getSubject() + "'.");
         }
 
     }
@@ -748,7 +748,7 @@ public class App {
             System.out.println("I'm sorry, the lecture you have chosen is already assigned to a course.");
         } else {
             course.addLecture(lecture);
-            System.out.println("Lecture registered.");
+            System.out.println("Lecture '" + lecture.getSubject() + "' registered to course '" + course.getCourseName() + "'.");
         }
     }
 
@@ -766,8 +766,8 @@ public class App {
         } else if (lecture.getAssignedTo() != course) {
             System.out.println("I'm sorry, the lecture you have chosen isn't registered to the course you have chosen.");
         } else {
-            course.addLecture(lecture);
-            System.out.println("Lecture unregistered.");
+            course.removeLecture(lecture);
+            System.out.println("Lecture '" + lecture.getSubject() + "' unregistered from course '" + course.getCourseName() + "'.");
         }
 
     }

@@ -14,11 +14,12 @@ public class Student {
     private List<Course> courseList;
 
     public Student(String name, String email, String address) {
-        this.name = name;
-        this.email = email;
-        this.address = address;
+        setName(name);
+        setEmail(email);
+        setAddress(address);
         id = ++idCounter;
         courseList = new ArrayList();
+
     }
 
     public int getId() {

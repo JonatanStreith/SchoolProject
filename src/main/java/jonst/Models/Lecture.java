@@ -18,11 +18,11 @@ public class Lecture {
 
 
     public Lecture(String subject, LocalDate date) {
-        this.subject = subject;
-        this.date = date;
+        setSubject(subject);
+        setDate(date);
+        setAssignedToCourse(false);
         id = ++idCounter;
         teachers = new ArrayList<>();
-        assignedToCourse = false;
     }
 
     public int getId() {
@@ -55,7 +55,7 @@ public class Lecture {
         return assignedTo;
     }
 
-    public boolean setAssignedTo(Course assignedTo) {
+    public boolean assign(Course assignedTo) {
         this.assignedTo = assignedTo;
         if(assignedTo != null)
             assignedToCourse = true;

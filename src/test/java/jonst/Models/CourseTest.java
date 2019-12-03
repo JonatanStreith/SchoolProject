@@ -20,11 +20,8 @@ public class CourseTest {
     public void setUp() throws Exception {
 
         testCourse = new Course("Underwater basket weaving", LocalDate.parse("2020-04-11"), 4);
-
         testStudent = new Student("Bosse", "bosse@hotmail.com", "Almgatan 4");
-
         testLecture = new Lecture("Squaredancing", LocalDate.parse("1999-09-09"));
-
         testTeacher = new Teacher("Clara Oswald", "XximpossiblegirlxX@tardis.net", "The TARDIS");
 
     }

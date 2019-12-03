@@ -17,9 +17,9 @@ public class Course {
     private List<Lecture> lectures;
 
     public Course(String courseName, LocalDate startDate, int weekDuration) {
-        this.courseName = courseName;
-        this.startDate = startDate;
-        this.weekDuration = weekDuration;
+        setCourseName(courseName);
+        setStartDate(startDate);
+        setWeekDuration(weekDuration);
         id = ++idCounter;
         students = new ArrayList();
         lectures = new ArrayList();
@@ -94,14 +94,14 @@ public class Course {
 
     public boolean addLecture(Lecture lecture){
         lectures.add(lecture);
-        lecture.setAssignedTo(this);
+        lecture.assign(this);
         return true;
     }
 
     public boolean removeLecture(Lecture lecture){
         if(lectures.contains(lecture)) {
             lectures.remove(lecture);
-            lecture.setAssignedTo(null);
+            lecture.assign(null);
             return true;
         }
         else {

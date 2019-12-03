@@ -9,18 +9,13 @@ import static org.junit.Assert.*;
 
 public class StudentTest {
 
-    Student testStudent;
 
+    Student testStudent;
 
     @Before
     public void setUp() throws Exception {
         testStudent = new Student("Bosse", "bosse@hotmail.com", "Almgatan 4");
     }
-
-
-
-
-
 
     @Test
     public void constructorTest() {
@@ -31,37 +26,18 @@ public class StudentTest {
         assertEquals("Bosse", testStudent.getName());
         assertEquals("bosse@hotmail.com", testStudent.getEmail());
         assertEquals("Almgatan 4", testStudent.getAddress());
-
+        System.out.println("Done");
+        assertEquals(1, testStudent.getId());
     }
 
 
     @Test
-    public void setterGetterTest() {
-        boolean success;
+    public void studentInfoTest() {
 
-        int id = testStudent.getId();
-        assertNotNull(id);
-
-        String name = testStudent.getName();
-        assertNotNull(name);
-
-        String email = testStudent.getEmail();
-        assertNotNull(email);
-
-        String address = testStudent.getAddress();
-        assertNotNull(email);
-
-        success = testStudent.setName("George");
-        assertTrue(success);
-
-        success = testStudent.setEmail("dmz43@lunarstorm.net");
-        assertTrue(success);
-
-        success = testStudent.setAddress("Dark Fortress");
-        assertTrue(success);
 
         String info = testStudent.studentInfo();
-        assertNotEquals("", info);
+
+         assertNotEquals("", info);
 
     }
 }
