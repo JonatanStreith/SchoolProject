@@ -1,8 +1,6 @@
 package jonst.Dao;
 
-import jonst.Interfaces.CourseDao;
 import jonst.Interfaces.LectureDao;
-import jonst.Models.Course;
 import jonst.Models.Lecture;
 
 import java.time.LocalDate;
@@ -35,11 +33,11 @@ public class LectureDaoList implements LectureDao {
     }
 
     @Override
-    public List<Lecture> findBySubject(String subject) {
+    public List<Lecture> findByName(String subject) {
         List<Lecture> returnList = new ArrayList();
 
         for (Lecture lecture : lectures) {
-            if(lecture.getSubject().equalsIgnoreCase(subject))
+            if(lecture.getName().equalsIgnoreCase(subject))
                 returnList.add(lecture);
         }
         return returnList;

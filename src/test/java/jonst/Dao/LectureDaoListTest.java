@@ -1,6 +1,5 @@
 package jonst.Dao;
 
-import jonst.Models.Course;
 import jonst.Models.Lecture;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,7 +62,7 @@ public class LectureDaoListTest {
         List<Lecture> buffer = testDao.findAll();
 
         for (Lecture lecture : buffer) {
-            System.out.println("(" + lecture.getId() + ") " + lecture.getSubject() + "; starts " + lecture.getDate() + ".");
+            System.out.println("(" + lecture.getId() + ") " + lecture.getName() + "; starts " + lecture.getDate() + ".");
         }
 
         assertEquals(testDao.getNumberOfLectures(), buffer.size());      //Since the tests may add and remove lectures, we can't assume too much about the contents.
@@ -77,18 +76,18 @@ public class LectureDaoListTest {
         Lecture retrieve = testDao.findById(1);
         Lecture failed = testDao.findById(999);
 
-        assertEquals("New Math", retrieve.getSubject());
+        assertEquals("New Math", retrieve.getName());
         assertNull(failed);
     }
 
     @Test
     public void findBySubjectTest() {
 
-        List<Lecture> retrieve = testDao.findBySubject("Test tube hygiene");    //For the sake of the argument, we expect at least one lecture by this name to exist.
-        List<Lecture> failed = testDao.findBySubject("Nonexistent Subject");     //This should give us an empty, zero-size list.
+        List<Lecture> retrieve = testDao.findByName("Test tube hygiene");    //For the sake of the argument, we expect at least one lecture by this name to exist.
+        List<Lecture> failed = testDao.findByName("Nonexistent Subject");     //This should give us an empty, zero-size list.
 
 
-        assertEquals("Test tube hygiene", retrieve.get(0).getSubject());
+        assertEquals("Test tube hygiene", retrieve.get(0).getName());
         assertEquals(0, failed.size());
 
     }
@@ -102,7 +101,7 @@ public class LectureDaoListTest {
         List<Lecture> retrieve = testDao.findByDate(searchDate);
         List<Lecture> failed = testDao.findByDate(failDate);
 
-        assertEquals("Avoiding the Grandfather Paradox", retrieve.get(0).getSubject());
+        assertEquals("Avoiding the Grandfather Paradox", retrieve.get(0).getName());
         assertEquals(0, failed.size());
     }
 

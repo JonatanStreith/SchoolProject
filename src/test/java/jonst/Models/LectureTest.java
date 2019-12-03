@@ -25,7 +25,7 @@ public class LectureTest {
     public void constructorTest() {
 
         assertNotNull(testLecture);
-        assertEquals("Squaredancing", testLecture.getSubject());
+        assertEquals("Squaredancing", testLecture.getName());
         assertEquals(LocalDate.parse("1999-09-09"), testLecture.getDate());
         assertEquals(1, testLecture.getId());
 

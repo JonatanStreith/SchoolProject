@@ -9,7 +9,7 @@ import java.util.List;
 public interface LectureDao {
     Lecture saveLecture(Lecture lecture);
     Lecture findById(int id);
-    List<Lecture> findBySubject(String subject);
+    List<Lecture> findByName(String subject);
     List<Lecture> findByDate(LocalDate date);
     List<Lecture> findAll();
     boolean removeLecture(Lecture lecture);

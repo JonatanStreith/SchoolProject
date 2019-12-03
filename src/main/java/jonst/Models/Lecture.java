@@ -9,7 +9,7 @@ public class Lecture {
     private static int idCounter = 0;
 
     private int id;
-    private String subject;
+    private String name;
     private LocalDate date;
     private List<Teacher> teachers;
     private Course assignedTo;
@@ -17,8 +17,8 @@ public class Lecture {
     private boolean assignedToCourse;
 
 
-    public Lecture(String subject, LocalDate date) {
-        setSubject(subject);
+    public Lecture(String name, LocalDate date) {
+        setName(name);
         setDate(date);
         setAssignedToCourse(false);
         id = ++idCounter;
@@ -29,12 +29,12 @@ public class Lecture {
         return id;
     }
 
-    public String getSubject() {
-        return subject;
+    public String getName() {
+        return name;
     }
 
-    public boolean setSubject(String subject) {
-        this.subject = subject;
+    public boolean setName(String subject) {
+        this.name = subject;
         return true;
     }
 
@@ -84,6 +84,6 @@ public class Lecture {
     }
 
     public String lectureInfo(){
-        return ("(" + getId() + ") " + getSubject() + "; on date " + getDate() + ".");
+        return ("(" + getId() + ") " + getName() + "; on date " + getDate() + ".");
     }
 }
