@@ -187,18 +187,15 @@ public class App {
             System.out.println("1: Find a student through their e-mail.");
             System.out.println("2: Find a student through their Id.");
             System.out.println("3: Find all students by a given name. (Will return a list.)");
-            System.out.println("4: List all students. (Will return a list. WARNING: May be long.)");
-            System.out.println("");
+            System.out.println("4: List all students. (Will return a list. WARNING: May be long.)\n");
             System.out.println("5: Find a teacher through their e-mail.");
             System.out.println("6: Find a teacher through their Id.");
             System.out.println("7: Find all teachers by a given name. (Will return a list.)");
-            System.out.println("8: List all teachers. (Will return a list. WARNING: May be long.)");
-            System.out.println("");
+            System.out.println("8: List all teachers. (Will return a list. WARNING: May be long.)\n");
             System.out.println("9: Find a course through its Id.");
             System.out.println("10: Find all courses by a given name. (Will return a list.)");
             System.out.println("11: Find all courses by a given date. (Will return a list.)");
-            System.out.println("12: List all courses. (Will return a list. WARNING: May be long.)");
-            System.out.println("");
+            System.out.println("12: List all courses. (Will return a list. WARNING: May be long.)\n");
             System.out.println("13: Find a lecture through its Id.");
             System.out.println("14: Find all lectures by a given subject. (Will return a list.)");
             System.out.println("15: Find all lecture by a given date. (Will return a list.)");
@@ -287,16 +284,13 @@ public class App {
 
             System.out.println("1: Change student name.");
             System.out.println("2: Change student e-mail.");
-            System.out.println("3: Change student address.");
-            System.out.println("");
+            System.out.println("3: Change student address.\n");
             System.out.println("4: Change teacher name.");
             System.out.println("5: Change teacher e-mail.");
-            System.out.println("6: Change teacher address.");
-            System.out.println("");
+            System.out.println("6: Change teacher address.\n");
             System.out.println("7: Change course name.");
             System.out.println("8: Change course length (by weeks).");
-            System.out.println("9: Change course starting date.");
-            System.out.println("");
+            System.out.println("9: Change course starting date.\n");
             System.out.println("10: Change lecture subject.");
             System.out.println("11: Change lecture date.");
 
@@ -359,8 +353,7 @@ public class App {
 
     public static String getReply(String line) {
         System.out.print(line);
-        String reply = inputReader.nextLine();
-        return reply;
+        return inputReader.nextLine();
     }
 
     private static Object retrieve(String key) {
@@ -383,9 +376,8 @@ public class App {
             String reply = getReply("Which " + key + "? ").toLowerCase();
 
             String[] replyArray;
-            String method = "";
-            String input = "";
-            List<Object> resultList;
+            String method;
+            String input;
 
             try {
                 replyArray = reply.split(": ");
@@ -481,7 +473,7 @@ public class App {
 
     private static Object retrieveByDate(String date, String key) {
 
-        LocalDate parsedDate = null;
+        LocalDate parsedDate;
 
         try {
             parsedDate = LocalDate.parse(date);

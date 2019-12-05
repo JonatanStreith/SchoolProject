@@ -1,7 +1,5 @@
 package jonst.Models;
 
-import java.util.ArrayList;
-
 public class Teacher {
 
     private static int idCounter = 0;
